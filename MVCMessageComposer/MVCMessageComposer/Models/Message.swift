@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Message {
+struct Message: Codable {
     let id: String
     let senderId: String
     let recipientId: String

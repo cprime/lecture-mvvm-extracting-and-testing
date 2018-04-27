@@ -14,9 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
+        MessagingDataStorage.shared.clearData()
+        MessagingDataStorage.shared.currentUser = User(id: UUID().uuidString, name: "Jane Doe")
         return true
     }
 
