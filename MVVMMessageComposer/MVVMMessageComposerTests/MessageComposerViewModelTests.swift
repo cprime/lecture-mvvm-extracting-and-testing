@@ -33,4 +33,27 @@ class MessageComposerViewModelTests: XCTestCase {
     func testIsSendButtonEnabled() {
         XCTAssertEqual(viewModel.isSendButtonEnabled, false)
     }
+
+    func testShouldUpdateTextWhenUpdatedTextIsLessThanLimit() {
+        let fullLengthMessage = (0..<MessageComposerViewModel.maxCharacterCount).map({ _ in "_"}).joined()
+
+        viewModel.didUpdateMessageText("")
+        XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: "1"), true)
+
+        viewModel.didUpdateMessageText("123")
+        XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: "1"), true)
+
+        viewModel.didUpdateMessageText(fullLengthMessage)
+        XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 1), replacementText: "1"), true)
+    }
+
+    func testShouldUpdateTextWhenTextIsFullBut() {
+        let fullLengthMessage = (0..<MessageComposerViewModel.maxCharacterCount).map({ _ in "_"}).joined()
+
+        viewModel.didUpdateMessageText("1")
+        XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: fullLengthMessage), false)
+
+        viewModel.didUpdateMessageText(fullLengthMessage)
+        XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: MessageComposerViewModel.maxCharacterCount, length: 0), replacementText: "1"), false)
+    }
 }

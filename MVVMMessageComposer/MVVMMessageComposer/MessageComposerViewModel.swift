@@ -37,4 +37,13 @@ class MessageComposerViewModel {
         self.sender = sender
         self.recipient = recipient
     }
+
+    func didUpdateMessageText(_ text: String) {
+        messageText = text
+    }
+
+    func shouldChangeText(in range: NSRange, replacementText text: String) -> Bool {
+        let afterText = (messageText as NSString).replacingCharacters(in: range, with: text)
+        return afterText.count <= 140
+    }
 }

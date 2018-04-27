@@ -83,14 +83,12 @@ class MessageComposerViewController: UIViewController {
 
 extension MessageComposerViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let beforeText = textView.text else {
-            return text.count <= 140
-        }
-        let afterText = (beforeText as NSString).replacingCharacters(in: range, with: text)
-        return afterText.count <= 140
+        return viewModel.shouldChangeText(in: range, replacementText: text)
     }
 
     func textViewDidChange(_ textView: UITextView) {
+        viewModel.didUpdateMessageText(textView.text ?? "")
+
         characterCountLabel.text = "\((textView.text ?? "").count)/140"
         placeholderLabel.isHidden = !(textView.text ?? "").isEmpty
         if let text = textView.text, !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
