@@ -26,15 +26,19 @@ class MessageComposerViewController: UIViewController {
     weak var delegate: MessageComposerViewControllerDelegate?
     var viewModel: MessageComposerViewModel!
 
+    var sendButtonBackgroundColor: UIColor {
+        return viewModel.isSendButtonEnabled ? UIColor.blue : UIColor.blue.withAlphaComponent(0.33)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = "To: \(viewModel.recipient.name)"
-        characterCountLabel.text = "0/140"
-        messageTextView.text = ""
-        placeholderLabel.text = "Type message..."
-        sendButton.backgroundColor = UIColor.blue.withAlphaComponent(0.33)
-        sendButton.isEnabled = false
+        titleLabel.text = viewModel.title
+        characterCountLabel.text = viewModel.characterCount
+        messageTextView.text = viewModel.messageText
+        placeholderLabel.text = viewModel.placeholderTitle
+        sendButton.backgroundColor = sendButtonBackgroundColor
+        sendButton.isEnabled = viewModel.isSendButtonEnabled
     }
 
     override func viewWillAppear(_ animated: Bool) {
