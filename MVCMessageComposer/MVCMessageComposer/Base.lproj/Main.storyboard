@@ -55,6 +55,9 @@
                         <viewLayoutGuide key="safeArea" id="Xgi-ad-1wD"/>
                     </view>
                     <navigationItem key="navigationItem" id="V4L-UI-5Gv"/>
+                    <connections>
+                        <outlet property="sendMessageButton" destination="7qm-Gk-Jq5" id="L4z-Y5-1jl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b2n-xD-ltx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
