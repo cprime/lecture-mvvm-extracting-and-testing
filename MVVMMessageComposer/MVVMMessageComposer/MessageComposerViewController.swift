@@ -37,6 +37,7 @@ class MessageComposerViewController: UIViewController {
         characterCountLabel.text = viewModel.characterCount
         messageTextView.text = viewModel.messageText
         placeholderLabel.text = viewModel.placeholderTitle
+        placeholderLabel.isHidden = viewModel.isPlaceholderHidden
         sendButton.backgroundColor = sendButtonBackgroundColor
         sendButton.isEnabled = viewModel.isSendButtonEnabled
     }
@@ -89,14 +90,9 @@ extension MessageComposerViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         viewModel.didUpdateMessageText(textView.text ?? "")
 
-        characterCountLabel.text = "\((textView.text ?? "").count)/140"
-        placeholderLabel.isHidden = !(textView.text ?? "").isEmpty
-        if let text = textView.text, !text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
-            sendButton.backgroundColor = UIColor.blue
-            sendButton.isEnabled = true
-        } else {
-            sendButton.backgroundColor = UIColor.blue.withAlphaComponent(0.33)
-            sendButton.isEnabled = false
-        }
+        characterCountLabel.text = viewModel.characterCount
+        placeholderLabel.isHidden = viewModel.isPlaceholderHidden
+        sendButton.backgroundColor = sendButtonBackgroundColor
+        sendButton.isEnabled = viewModel.isSendButtonEnabled
     }
 }

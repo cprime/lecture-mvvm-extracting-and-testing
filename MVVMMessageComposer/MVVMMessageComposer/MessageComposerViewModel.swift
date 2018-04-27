@@ -23,14 +23,18 @@ class MessageComposerViewModel {
         return MessageComposerViewModel.placeholderText
     }
 
+    var isPlaceholderHidden: Bool {
+        return !messageText.isEmpty
+    }
+
     var characterCount: String {
-        return "0/140"
+        return "\(messageText.count)/\(MessageComposerViewModel.maxCharacterCount)"
     }
 
     private(set) var messageText = ""
 
     var isSendButtonEnabled: Bool {
-        return false
+        return !messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
 
     init(sender: User, recipient: User) {
