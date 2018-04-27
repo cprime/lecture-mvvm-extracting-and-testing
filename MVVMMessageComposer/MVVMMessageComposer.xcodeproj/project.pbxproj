@@ -18,6 +18,7 @@
 		A90BB9502092BD0B00301FD2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90BB94F2092BD0B00301FD2 /* Message.swift */; };
 		A90BB9522092BD1B00301FD2 /* MessagingRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90BB9512092BD1B00301FD2 /* MessagingRestClient.swift */; };
 		A95F81F32093A143001EAA56 /* MessagingDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F81F22093A143001EAA56 /* MessagingDataStorage.swift */; };
+		A95F81FF2093CF50001EAA56 /* MessageComposerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F81FE2093CF50001EAA56 /* MessageComposerViewModel.swift */; };
 		B47C916719D35A117872210B /* Pods_MVVMMessageComposerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A5AA9DF2AAADBC516F7D18 /* Pods_MVVMMessageComposerTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		A90BB9512092BD1B00301FD2 /* MessagingRestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingRestClient.swift; sourceTree = "<group>"; };
 		A9376ACA2A898AFFD7282B63 /* Pods-MVVMMessageComposer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMMessageComposer.release.xcconfig"; path = "Pods/Target Support Files/Pods-MVVMMessageComposer/Pods-MVVMMessageComposer.release.xcconfig"; sourceTree = "<group>"; };
 		A95F81F22093A143001EAA56 /* MessagingDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingDataStorage.swift; sourceTree = "<group>"; };
+		A95F81FE2093CF50001EAA56 /* MessageComposerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageComposerViewModel.swift; sourceTree = "<group>"; };
 		B4A5AA9DF2AAADBC516F7D18 /* Pods_MVVMMessageComposerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMMessageComposerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D450DA9DC52A1E05A63AB9D2 /* Pods-MVVMMessageComposer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMMessageComposer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MVVMMessageComposer/Pods-MVVMMessageComposer.debug.xcconfig"; sourceTree = "<group>"; };
 		EA034885DCFCF33C782CF62F /* Pods-MVVMMessageComposerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMMessageComposerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MVVMMessageComposerTests/Pods-MVVMMessageComposerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				A90BB92A2092B4DD00301FD2 /* AppDelegate.swift */,
 				A90BB92C2092B4DD00301FD2 /* RootViewController.swift */,
 				A90BB94A2092B55A00301FD2 /* MessageComposerViewController.swift */,
+				A95F81FE2093CF50001EAA56 /* MessageComposerViewModel.swift */,
 				A90BB94C2092BCE000301FD2 /* Models */,
 				A90BB92E2092B4DD00301FD2 /* Main.storyboard */,
 				A90BB9312092B4E000301FD2 /* Assets.xcassets */,
@@ -318,6 +321,7 @@
 			files = (
 				A95F81F32093A143001EAA56 /* MessagingDataStorage.swift in Sources */,
 				A90BB94E2092BCFF00301FD2 /* User.swift in Sources */,
+				A95F81FF2093CF50001EAA56 /* MessageComposerViewModel.swift in Sources */,
 				A90BB92D2092B4DD00301FD2 /* RootViewController.swift in Sources */,
 				A90BB9502092BD0B00301FD2 /* Message.swift in Sources */,
 				A90BB94B2092B55A00301FD2 /* MessageComposerViewController.swift in Sources */,

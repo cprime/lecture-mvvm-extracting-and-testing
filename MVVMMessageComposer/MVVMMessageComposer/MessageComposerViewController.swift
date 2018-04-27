@@ -24,13 +24,12 @@ class MessageComposerViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!
 
     weak var delegate: MessageComposerViewControllerDelegate?
-    var sender: User!
-    var recipient: User!
+    var viewModel: MessageComposerViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = "To: \(recipient.name)"
+        titleLabel.text = "To: \(viewModel.recipient.name)"
         characterCountLabel.text = "0/140"
         messageTextView.text = ""
         placeholderLabel.text = "Type message..."
@@ -57,7 +56,7 @@ class MessageComposerViewController: UIViewController {
         messageTextView.resignFirstResponder()
         SwiftSpinner.show("Sending message...")
         let message = messageTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        MessagingRestClient.shared.send(message, from: self.sender, to: self.recipient) { [weak self] result in
+        MessagingRestClient.shared.send(message, from: viewModel.sender, to: viewModel.recipient) { [weak self] result in
             guard let strongSelf = self else { return }
             if let message = result.value {
                 SwiftSpinner.hide()
