@@ -11,6 +11,10 @@ import Intrepid
 import SwiftSpinner
 import IQKeyboardManagerSwift
 
+protocol MessageComposerViewControllerDelegate: class {
+    func messageComposerViewController(_ viewController: MessageComposerViewController, didFinishWithMessage: Message?)
+}
+
 class MessageComposerViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,6 +23,7 @@ class MessageComposerViewController: UIViewController {
     @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var sendButton: UIButton!
 
+    weak var delegate: MessageComposerViewControllerDelegate?
     var sender: User!
     var recipient: User!
 
@@ -53,10 +58,11 @@ class MessageComposerViewController: UIViewController {
         SwiftSpinner.show("Sending message...")
         let message = messageTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         MessagingRestClient.shared.send(message, from: self.sender, to: self.recipient) { [weak self] result in
+            guard let strongSelf = self else { return }
             if let message = result.value {
                 SwiftSpinner.hide()
                 MessagingDataStorage.shared.save(message)
-                self?.dismiss(animated: true, completion: nil)
+                strongSelf.delegate?.messageComposerViewController(strongSelf, didFinishWithMessage: message)
             } else {
                 SwiftSpinner.show("Send failed...")
                 After(0.5) {
@@ -68,7 +74,7 @@ class MessageComposerViewController: UIViewController {
     }
 
     @IBAction func closeButtonClicked(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        delegate?.messageComposerViewController(self, didFinishWithMessage: nil)
     }
 }
 

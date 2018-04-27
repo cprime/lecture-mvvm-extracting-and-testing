@@ -11,6 +11,7 @@ import SwiftSpinner
 
 class RootViewController: UIViewController {
     @IBOutlet weak var sendMessageButton: UIButton!
+    @IBOutlet weak var sentCountLabel: UILabel!
 
     var contacts = [User]()
 
@@ -40,6 +41,22 @@ class RootViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateSentMessageCount()
+    }
+
+    func updateSentMessageCount() {
+        var sendCount: Int {
+            if let currentUser = MessagingDataStorage.shared.currentUser, let contact = contacts.first {
+                return MessagingDataStorage.shared.getConversationBetween(currentUser, and: contact).count
+            } else {
+                return 0
+            }
+        }
+        sentCountLabel.text = "\(sendCount) messages sent"
+    }
+
     @IBAction func sendMessageButtonClicked(_ sender: Any) {
         guard let currentUser = MessagingDataStorage.shared.currentUser, let contact = self.contacts.first else {
             return
@@ -47,8 +64,16 @@ class RootViewController: UIViewController {
         let vc = storyboard?.instantiateViewController(withIdentifier: "MessageComposerViewController") as! MessageComposerViewController
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .overCurrentContext
+        vc.delegate = self
         vc.sender = currentUser
         vc.recipient = contact
         present(vc, animated: true, completion: nil)
+    }
+}
+
+extension RootViewController: MessageComposerViewControllerDelegate {
+    func messageComposerViewController(_ viewController: MessageComposerViewController, didFinishWithMessage: Message?) {
+        updateSentMessageCount()
+        viewController.dismiss(animated: true, completion: nil)
     }
 }

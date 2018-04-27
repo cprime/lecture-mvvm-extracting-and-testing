@@ -46,10 +46,18 @@
                                     <action selector="sendMessageButtonClicked:" destination="PgN-9p-fUM" eventType="touchUpInside" id="m8y-lf-RTF"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOg-KU-CFX">
+                                <rect key="frame" x="166" y="356" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7qm-Gk-Jq5" firstAttribute="centerY" secondItem="ocK-P7-f1h" secondAttribute="centerY" id="BTj-hH-DR7"/>
+                            <constraint firstItem="HOg-KU-CFX" firstAttribute="top" secondItem="7qm-Gk-Jq5" secondAttribute="bottom" constant="8" id="N51-Ju-q2B"/>
+                            <constraint firstItem="HOg-KU-CFX" firstAttribute="centerX" secondItem="7qm-Gk-Jq5" secondAttribute="centerX" id="NFf-oi-bGY"/>
                             <constraint firstItem="7qm-Gk-Jq5" firstAttribute="centerX" secondItem="ocK-P7-f1h" secondAttribute="centerX" id="f7B-xL-WeO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xgi-ad-1wD"/>
@@ -57,6 +65,7 @@
                     <navigationItem key="navigationItem" id="V4L-UI-5Gv"/>
                     <connections>
                         <outlet property="sendMessageButton" destination="7qm-Gk-Jq5" id="L4z-Y5-1jl"/>
+                        <outlet property="sentCountLabel" destination="HOg-KU-CFX" id="yzm-GJ-ocs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b2n-xD-ltx" userLabel="First Responder" sceneMemberID="firstResponder"/>
