@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Intrepid
 
 class MessageComposerViewModel {
     static let placeholderText = "Type message..."
@@ -14,6 +15,7 @@ class MessageComposerViewModel {
 
     let sender: User
     let recipient: User
+    let restClient: RestClient
 
     var title: String {
         return "To: \(recipient.name)"
@@ -37,9 +39,10 @@ class MessageComposerViewModel {
         return !messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
 
-    init(sender: User, recipient: User) {
+    init(sender: User, recipient: User, restClient: RestClient = MessagingRestClient.shared) {
         self.sender = sender
         self.recipient = recipient
+        self.restClient = restClient
     }
 
     func didUpdateMessageText(_ text: String) {
@@ -49,5 +52,14 @@ class MessageComposerViewModel {
     func shouldChangeText(in range: NSRange, replacementText text: String) -> Bool {
         let afterText = (messageText as NSString).replacingCharacters(in: range, with: text)
         return afterText.count <= 140
+    }
+
+    func send(_ completion: @escaping (Result<Message>) -> Void) {
+        restClient.send(messageText, from: sender, to: recipient) { result in
+            if let message = result.value {
+                MessagingDataStorage.shared.save(message)
+            }
+            completion(result)
+        }
     }
 }

@@ -13,7 +13,12 @@ class MessageComposerViewModelTests: XCTestCase {
     let fullLengthMessage = (0..<MessageComposerViewModel.maxCharacterCount).map({ _ in "_"}).joined()
     let sender = User(id: UUID().uuidString, email: "alice@example.com", name: "Alice")
     let recipient = User(id: UUID().uuidString, email: "bob@example.com", name: "Bob")
-    lazy var viewModel = MessageComposerViewModel(sender: sender, recipient: recipient)
+    let restClient = MockRestClient()
+    lazy var viewModel = MessageComposerViewModel(sender: sender, recipient: recipient, restClient: restClient)
+
+    override func tearDown() {
+        restClient.capturedSendArguments.removeAll()
+    }
 
     func testTitle() {
         XCTAssertEqual(viewModel.title, "To: \(viewModel.recipient.name)")
@@ -89,5 +94,44 @@ class MessageComposerViewModelTests: XCTestCase {
 
         viewModel.didUpdateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: MessageComposerViewModel.maxCharacterCount, length: 0), replacementText: "1"), false)
+    }
+
+    func testSendWithSuccess() {
+        let text = "Hello, World!"
+        let date = Date()
+        let message = Message(id: "message_1", senderId: sender.id, recipientId: recipient.id, text: text, date: date)
+        restClient.stubbedSendResult = .success(message)
+
+        viewModel.didUpdateMessageText(text)
+        let expectation = XCTestExpectation(description: "Send Message")
+        viewModel.send { result in
+            expectation.fulfill()
+            XCTAssertTrue(result.isSuccess)
+            XCTAssertEqual(result.value?.text, text)
+        }
+        wait(for: [expectation], timeout: 1.0)
+
+        XCTAssertEqual(restClient.capturedSendArguments.count, 1)
+        XCTAssertEqual(restClient.capturedSendArguments.first?.text, text)
+        XCTAssertEqual(restClient.capturedSendArguments.first?.sender.id, sender.id)
+        XCTAssertEqual(restClient.capturedSendArguments.first?.recipient.id, recipient.id)
+    }
+
+    func testSendWithFailure() {
+        let text = "Hello, World!"
+        restClient.stubbedSendResult = .failure(MessagingRestClient.RestError.unknown)
+
+        viewModel.didUpdateMessageText(text)
+        let expectation = XCTestExpectation(description: "Send Message")
+        viewModel.send { result in
+            expectation.fulfill()
+            XCTAssertTrue(result.isFailure)
+        }
+        wait(for: [expectation], timeout: 1.0)
+
+        XCTAssertEqual(restClient.capturedSendArguments.count, 1)
+        XCTAssertEqual(restClient.capturedSendArguments.first?.text, text)
+        XCTAssertEqual(restClient.capturedSendArguments.first?.sender.id, sender.id)
+        XCTAssertEqual(restClient.capturedSendArguments.first?.recipient.id, recipient.id)
     }
 }

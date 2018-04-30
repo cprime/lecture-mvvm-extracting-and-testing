@@ -60,12 +60,10 @@ class MessageComposerViewController: UIViewController {
     @IBAction func sendButtonClicked(_ sender: Any) {
         messageTextView.resignFirstResponder()
         SwiftSpinner.show("Sending message...")
-        let message = messageTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        MessagingRestClient.shared.send(message, from: viewModel.sender, to: viewModel.recipient) { [weak self] result in
+        viewModel.send { [weak self] result in
             guard let strongSelf = self else { return }
             if let message = result.value {
                 SwiftSpinner.hide()
-                MessagingDataStorage.shared.save(message)
                 strongSelf.delegate?.messageComposerViewController(strongSelf, didFinishWithMessage: message)
             } else {
                 SwiftSpinner.show("Send failed...")

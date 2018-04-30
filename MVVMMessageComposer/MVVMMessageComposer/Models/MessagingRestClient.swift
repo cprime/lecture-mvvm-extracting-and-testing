@@ -9,7 +9,11 @@
 import Foundation
 import Intrepid
 
-class MessagingRestClient {
+protocol RestClient {
+    func send(_ text: String, from sender: User, to recipient: User, completion: @escaping (Result<Message>) -> Void)
+}
+
+class MessagingRestClient: RestClient {
     enum RestError: Error {
         case unknown
     }
