@@ -18,6 +18,24 @@ class MessageComposerViewModel {
     let restClient: RestClient
     let dataStorage: DataStorage
 
+    var didUpdateCharacterCount: ((String) -> Void)? {
+        didSet {
+            didUpdateCharacterCount?(characterCount)
+        }
+    }
+
+    var didUpdateIsPlaceholderHidden: ((Bool) -> Void)? {
+        didSet {
+            didUpdateIsPlaceholderHidden?(isPlaceholderHidden)
+        }
+    }
+
+    var didUpdateIsSendButtonEnabled: ((Bool) -> Void)? {
+        didSet {
+            didUpdateIsSendButtonEnabled?(isSendButtonEnabled)
+        }
+    }
+
     var title: String {
         return "To: \(recipient.name)"
     }
@@ -34,7 +52,13 @@ class MessageComposerViewModel {
         return "\(messageText.count)/\(MessageComposerViewModel.maxCharacterCount)"
     }
 
-    private(set) var messageText = ""
+    private(set) var messageText = "" {
+        didSet {
+            didUpdateCharacterCount?(characterCount)
+            didUpdateIsPlaceholderHidden?(isPlaceholderHidden)
+            didUpdateIsSendButtonEnabled?(isSendButtonEnabled)
+        }
+    }
 
     var isSendButtonEnabled: Bool {
         return !messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty

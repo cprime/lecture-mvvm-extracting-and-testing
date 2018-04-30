@@ -31,7 +31,7 @@ class MessageComposerViewModelTests: XCTestCase {
     }
 
     func testIsPlaceholderHidden() {
-        XCTAssertEqual(viewModel.isSendButtonEnabled, false)
+        XCTAssertEqual(viewModel.isPlaceholderHidden, false)
     }
 
     func testIsPlaceholderHiddenAfterUpdatingMessageText() {
@@ -40,6 +40,18 @@ class MessageComposerViewModelTests: XCTestCase {
 
         viewModel.didUpdateMessageText("1")
         XCTAssertEqual(viewModel.isPlaceholderHidden, true)
+    }
+
+    func testIsPlaceholderHiddenUpdatesAfterUpdatingMessageText() {
+        var isPlaceholderHidden: Bool?
+        viewModel.didUpdateIsPlaceholderHidden = {
+            isPlaceholderHidden = $0
+        }
+
+        XCTAssertEqual(isPlaceholderHidden, false)
+
+        viewModel.didUpdateMessageText("1")
+        XCTAssertEqual(isPlaceholderHidden, true)
     }
 
     func testMessageText() {
@@ -61,6 +73,18 @@ class MessageComposerViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.characterCount, "\(MessageComposerViewModel.maxCharacterCount)/\(MessageComposerViewModel.maxCharacterCount)")
     }
 
+    func testCharacterCountUpdatesAfterUpdatingMessageText() {
+        var characterCount: String?
+        viewModel.didUpdateCharacterCount = {
+            characterCount = $0
+        }
+
+        XCTAssertEqual(characterCount, "0/\(MessageComposerViewModel.maxCharacterCount)")
+
+        viewModel.didUpdateMessageText("1")
+        XCTAssertEqual(characterCount, "1/\(MessageComposerViewModel.maxCharacterCount)")
+    }
+
     func testIsSendButtonEnabled() {
         XCTAssertEqual(viewModel.isSendButtonEnabled, false)
     }
@@ -77,6 +101,18 @@ class MessageComposerViewModelTests: XCTestCase {
 
         viewModel.didUpdateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.isSendButtonEnabled, true)
+    }
+
+    func testIsSendButtonEnabledUpdatesAfterUpdatingMessageText() {
+        var isSendButtonEnabled: Bool?
+        viewModel.didUpdateIsSendButtonEnabled = {
+            isSendButtonEnabled = $0
+        }
+
+        XCTAssertEqual(isSendButtonEnabled, false)
+
+        viewModel.didUpdateMessageText("1")
+        XCTAssertEqual(isSendButtonEnabled, true)
     }
 
     func testShouldUpdateTextWhenUpdatedTextIsLessThanLimit() {

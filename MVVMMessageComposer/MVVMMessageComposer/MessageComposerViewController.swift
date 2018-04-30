@@ -34,12 +34,19 @@ class MessageComposerViewController: UIViewController {
         super.viewDidLoad()
 
         titleLabel.text = viewModel.title
-        characterCountLabel.text = viewModel.characterCount
         messageTextView.text = viewModel.messageText
         placeholderLabel.text = viewModel.placeholderTitle
-        placeholderLabel.isHidden = viewModel.isPlaceholderHidden
-        sendButton.backgroundColor = sendButtonBackgroundColor
-        sendButton.isEnabled = viewModel.isSendButtonEnabled
+
+        viewModel.didUpdateCharacterCount = { [weak self] in
+            self?.characterCountLabel.text = $0
+        }
+        viewModel.didUpdateIsPlaceholderHidden = { [weak self] in
+            self?.placeholderLabel.isHidden = $0
+        }
+        viewModel.didUpdateIsSendButtonEnabled = { [weak self] in
+            self?.sendButton.isEnabled = $0
+            self?.sendButton.backgroundColor = self?.sendButtonBackgroundColor
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,10 +94,5 @@ extension MessageComposerViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         viewModel.didUpdateMessageText(textView.text ?? "")
-
-        characterCountLabel.text = viewModel.characterCount
-        placeholderLabel.isHidden = viewModel.isPlaceholderHidden
-        sendButton.backgroundColor = sendButtonBackgroundColor
-        sendButton.isEnabled = viewModel.isSendButtonEnabled
     }
 }
