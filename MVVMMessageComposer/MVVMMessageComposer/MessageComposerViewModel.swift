@@ -71,7 +71,7 @@ class MessageComposerViewModel {
         self.dataStorage = dataStorage
     }
 
-    func didUpdateMessageText(_ text: String) {
+    func updateMessageText(_ text: String) {
         messageText = text
     }
 

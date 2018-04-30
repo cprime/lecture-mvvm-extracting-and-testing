@@ -35,10 +35,10 @@ class MessageComposerViewModelTests: XCTestCase {
     }
 
     func testIsPlaceholderHiddenAfterUpdatingMessageText() {
-        viewModel.didUpdateMessageText("")
+        viewModel.updateMessageText("")
         XCTAssertEqual(viewModel.isPlaceholderHidden, false)
 
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(viewModel.isPlaceholderHidden, true)
     }
 
@@ -50,7 +50,7 @@ class MessageComposerViewModelTests: XCTestCase {
 
         XCTAssertEqual(isPlaceholderHidden, false)
 
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(isPlaceholderHidden, true)
     }
 
@@ -63,13 +63,13 @@ class MessageComposerViewModelTests: XCTestCase {
     }
 
     func testCharacterCountAfterUpdatingMessageText() {
-        viewModel.didUpdateMessageText("")
+        viewModel.updateMessageText("")
         XCTAssertEqual(viewModel.characterCount, "0/\(MessageComposerViewModel.maxCharacterCount)")
 
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(viewModel.characterCount, "1/\(MessageComposerViewModel.maxCharacterCount)")
 
-        viewModel.didUpdateMessageText(fullLengthMessage)
+        viewModel.updateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.characterCount, "\(MessageComposerViewModel.maxCharacterCount)/\(MessageComposerViewModel.maxCharacterCount)")
     }
 
@@ -81,7 +81,7 @@ class MessageComposerViewModelTests: XCTestCase {
 
         XCTAssertEqual(characterCount, "0/\(MessageComposerViewModel.maxCharacterCount)")
 
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(characterCount, "1/\(MessageComposerViewModel.maxCharacterCount)")
     }
 
@@ -90,16 +90,16 @@ class MessageComposerViewModelTests: XCTestCase {
     }
 
     func testIsSendButtonEnabledAfterUpdatingMessageText() {
-        viewModel.didUpdateMessageText("")
+        viewModel.updateMessageText("")
         XCTAssertEqual(viewModel.isSendButtonEnabled, false)
 
-        viewModel.didUpdateMessageText(" ")
+        viewModel.updateMessageText(" ")
         XCTAssertEqual(viewModel.isSendButtonEnabled, false)
 
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(viewModel.isSendButtonEnabled, true)
 
-        viewModel.didUpdateMessageText(fullLengthMessage)
+        viewModel.updateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.isSendButtonEnabled, true)
     }
 
@@ -111,26 +111,26 @@ class MessageComposerViewModelTests: XCTestCase {
 
         XCTAssertEqual(isSendButtonEnabled, false)
 
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(isSendButtonEnabled, true)
     }
 
     func testShouldUpdateTextWhenUpdatedTextIsLessThanLimit() {
-        viewModel.didUpdateMessageText("")
+        viewModel.updateMessageText("")
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: "1"), true)
 
-        viewModel.didUpdateMessageText("123")
+        viewModel.updateMessageText("123")
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: "1"), true)
 
-        viewModel.didUpdateMessageText(fullLengthMessage)
+        viewModel.updateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 1), replacementText: "1"), true)
     }
 
     func testShouldUpdateTextWhenTextIsFullBut() {
-        viewModel.didUpdateMessageText("1")
+        viewModel.updateMessageText("1")
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: fullLengthMessage), false)
 
-        viewModel.didUpdateMessageText(fullLengthMessage)
+        viewModel.updateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: MessageComposerViewModel.maxCharacterCount, length: 0), replacementText: "1"), false)
     }
 
@@ -140,7 +140,7 @@ class MessageComposerViewModelTests: XCTestCase {
         let message = Message(id: "message_1", senderId: sender.id, recipientId: recipient.id, text: text, date: date)
         restClient.stubbedSendResult = .success(message)
 
-        viewModel.didUpdateMessageText(text)
+        viewModel.updateMessageText(text)
         let expectation = XCTestExpectation(description: "Send Message")
         viewModel.send { result in
             expectation.fulfill()
@@ -161,7 +161,7 @@ class MessageComposerViewModelTests: XCTestCase {
         let text = "Hello, World!"
         restClient.stubbedSendResult = .failure(MessagingRestClient.RestError.unknown)
 
-        viewModel.didUpdateMessageText(text)
+        viewModel.updateMessageText(text)
         let expectation = XCTestExpectation(description: "Send Message")
         viewModel.send { result in
             expectation.fulfill()

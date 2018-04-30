@@ -93,6 +93,6 @@ extension MessageComposerViewController: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.didUpdateMessageText(textView.text ?? "")
+        viewModel.updateMessageText(textView.text ?? "")
     }
 }
