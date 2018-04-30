@@ -14,10 +14,12 @@ class MessageComposerViewModelTests: XCTestCase {
     let sender = User(id: UUID().uuidString, email: "alice@example.com", name: "Alice")
     let recipient = User(id: UUID().uuidString, email: "bob@example.com", name: "Bob")
     let restClient = MockRestClient()
-    lazy var viewModel = MessageComposerViewModel(sender: sender, recipient: recipient, restClient: restClient)
+    let dataStorage = MockDataStorage()
+    lazy var viewModel = MessageComposerViewModel(sender: sender, recipient: recipient, restClient: restClient, dataStorage: dataStorage)
 
     override func tearDown() {
         restClient.capturedSendArguments.removeAll()
+        dataStorage.messages.removeAll()
     }
 
     func testTitle() {
@@ -108,6 +110,8 @@ class MessageComposerViewModelTests: XCTestCase {
             expectation.fulfill()
             XCTAssertTrue(result.isSuccess)
             XCTAssertEqual(result.value?.text, text)
+            XCTAssertEqual(self.dataStorage.messages.count, 1)
+            XCTAssertEqual(self.dataStorage.messages.first?.id, message.id)
         }
         wait(for: [expectation], timeout: 1.0)
 
@@ -126,6 +130,7 @@ class MessageComposerViewModelTests: XCTestCase {
         viewModel.send { result in
             expectation.fulfill()
             XCTAssertTrue(result.isFailure)
+            XCTAssertEqual(self.dataStorage.messages.count, 0)
         }
         wait(for: [expectation], timeout: 1.0)
 

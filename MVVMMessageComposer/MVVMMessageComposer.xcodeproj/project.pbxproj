@@ -21,6 +21,7 @@
 		A95F81FD2093CF47001EAA56 /* MessageComposerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F81FC2093CF47001EAA56 /* MessageComposerViewModelTests.swift */; };
 		A95F81FF2093CF50001EAA56 /* MessageComposerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F81FE2093CF50001EAA56 /* MessageComposerViewModel.swift */; };
 		A95F820920978429001EAA56 /* MockRestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F820820978429001EAA56 /* MockRestClient.swift */; };
+		A95F820B20978A48001EAA56 /* MockDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F820A20978A48001EAA56 /* MockDataStorage.swift */; };
 		B47C916719D35A117872210B /* Pods_MVVMMessageComposerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A5AA9DF2AAADBC516F7D18 /* Pods_MVVMMessageComposerTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		A95F81FC2093CF47001EAA56 /* MessageComposerViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageComposerViewModelTests.swift; sourceTree = "<group>"; };
 		A95F81FE2093CF50001EAA56 /* MessageComposerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageComposerViewModel.swift; sourceTree = "<group>"; };
 		A95F820820978429001EAA56 /* MockRestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRestClient.swift; sourceTree = "<group>"; };
+		A95F820A20978A48001EAA56 /* MockDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataStorage.swift; sourceTree = "<group>"; };
 		B4A5AA9DF2AAADBC516F7D18 /* Pods_MVVMMessageComposerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMMessageComposerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D450DA9DC52A1E05A63AB9D2 /* Pods-MVVMMessageComposer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMMessageComposer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MVVMMessageComposer/Pods-MVVMMessageComposer.debug.xcconfig"; sourceTree = "<group>"; };
 		EA034885DCFCF33C782CF62F /* Pods-MVVMMessageComposerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMMessageComposerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MVVMMessageComposerTests/Pods-MVVMMessageComposerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		A95F820720978417001EAA56 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				A95F820A20978A48001EAA56 /* MockDataStorage.swift */,
 				A95F820820978429001EAA56 /* MockRestClient.swift */,
 			);
 			path = Mocks;
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95F820920978429001EAA56 /* MockRestClient.swift in Sources */,
+				A95F820B20978A48001EAA56 /* MockDataStorage.swift in Sources */,
 				A95F81FD2093CF47001EAA56 /* MessageComposerViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

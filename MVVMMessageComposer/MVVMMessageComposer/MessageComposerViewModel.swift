@@ -16,6 +16,7 @@ class MessageComposerViewModel {
     let sender: User
     let recipient: User
     let restClient: RestClient
+    let dataStorage: DataStorage
 
     var title: String {
         return "To: \(recipient.name)"
@@ -39,10 +40,11 @@ class MessageComposerViewModel {
         return !messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
 
-    init(sender: User, recipient: User, restClient: RestClient = MessagingRestClient.shared) {
+    init(sender: User, recipient: User, restClient: RestClient = MessagingRestClient.shared, dataStorage: DataStorage = MessagingDataStorage.shared) {
         self.sender = sender
         self.recipient = recipient
         self.restClient = restClient
+        self.dataStorage = dataStorage
     }
 
     func didUpdateMessageText(_ text: String) {
@@ -55,9 +57,9 @@ class MessageComposerViewModel {
     }
 
     func send(_ completion: @escaping (Result<Message>) -> Void) {
-        restClient.send(messageText, from: sender, to: recipient) { result in
+        restClient.send(messageText, from: sender, to: recipient) { [weak self] result in
             if let message = result.value {
-                MessagingDataStorage.shared.save(message)
+                self?.dataStorage.save(message)
             }
             completion(result)
         }

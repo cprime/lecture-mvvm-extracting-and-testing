@@ -9,7 +9,11 @@
 import Foundation
 import Intrepid
 
-class MessagingDataStorage {
+protocol DataStorage {
+    func save(_ message: Message)
+}
+
+class MessagingDataStorage: DataStorage {
     static let shared = MessagingDataStorage()
 
     private var users: [String:User] {
