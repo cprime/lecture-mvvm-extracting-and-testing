@@ -22,9 +22,13 @@ class MessageComposerViewModelTests: XCTestCase {
         dataStorage.messages.removeAll()
     }
 
+    // MARK: Title
+
     func testTitle() {
         XCTAssertEqual(viewModel.title, "To: \(viewModel.recipient.name)")
     }
+
+    // MARK: Placeholder
 
     func testPlaceholder() {
         XCTAssertEqual(viewModel.placeholderTitle, MessageComposerViewModel.placeholderText)
@@ -54,9 +58,16 @@ class MessageComposerViewModelTests: XCTestCase {
         XCTAssertEqual(isPlaceholderHidden, true)
     }
 
+    // MARK: Message Text
+
     func testMessageText() {
         XCTAssertEqual(viewModel.messageText, "")
+
+        viewModel.updateMessageText("1")
+        XCTAssertEqual(viewModel.messageText, "1")
     }
+
+    // MARK: Character Count
 
     func testCharacterCount() {
         XCTAssertEqual(viewModel.characterCount, "0/\(MessageComposerViewModel.maxCharacterCount)")
@@ -84,6 +95,8 @@ class MessageComposerViewModelTests: XCTestCase {
         viewModel.updateMessageText("1")
         XCTAssertEqual(characterCount, "1/\(MessageComposerViewModel.maxCharacterCount)")
     }
+
+    // MARK: Send Button
 
     func testIsSendButtonEnabled() {
         XCTAssertEqual(viewModel.isSendButtonEnabled, false)
@@ -115,6 +128,8 @@ class MessageComposerViewModelTests: XCTestCase {
         XCTAssertEqual(isSendButtonEnabled, true)
     }
 
+    // MARK: ShouldChangeText
+
     func testShouldUpdateTextWhenUpdatedTextIsLessThanLimit() {
         viewModel.updateMessageText("")
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: 0, length: 0), replacementText: "1"), true)
@@ -133,6 +148,8 @@ class MessageComposerViewModelTests: XCTestCase {
         viewModel.updateMessageText(fullLengthMessage)
         XCTAssertEqual(viewModel.shouldChangeText(in: NSRange(location: MessageComposerViewModel.maxCharacterCount, length: 0), replacementText: "1"), false)
     }
+
+    // MARK: Sending
 
     func testSendWithSuccess() {
         let text = "Hello, World!"
