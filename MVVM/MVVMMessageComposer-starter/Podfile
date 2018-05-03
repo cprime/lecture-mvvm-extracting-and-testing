@@ -1,0 +1,16 @@
+platform :ios, '11.0'
+inhibit_all_warnings!
+
+target 'MVVMMessageComposer' do
+  use_frameworks!
+
+  pod 'Intrepid'
+  pod 'IQKeyboardManagerSwift'
+  pod 'SwiftSpinner'
+
+  target 'MVVMMessageComposerTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

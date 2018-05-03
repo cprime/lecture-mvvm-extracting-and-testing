@@ -1,0 +1,30 @@
+PODS:
+  - Intrepid (0.9.1):
+    - Intrepid/Core (= 0.9.1)
+  - Intrepid/Core (0.9.1):
+    - IP-UIKit-Wisdom (= 0.0.10)
+  - IP-UIKit-Wisdom (0.0.10)
+  - IQKeyboardManagerSwift (6.0.1)
+  - SwiftSpinner (1.5.0)
+
+DEPENDENCIES:
+  - Intrepid
+  - IQKeyboardManagerSwift
+  - SwiftSpinner
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Intrepid
+    - IP-UIKit-Wisdom
+    - IQKeyboardManagerSwift
+    - SwiftSpinner
+
+SPEC CHECKSUMS:
+  Intrepid: 66b9e5d11bd47e5ee85001ed3a4c1cf04b1a005a
+  IP-UIKit-Wisdom: b395a065344071b33659e5f6b918043a97c48a44
+  IQKeyboardManagerSwift: 748d06e0f8134fc28934031e6377da3cf3d4f38c
+  SwiftSpinner: 4c058c7a1d6b444dd2e1d70988ead40783097133
+
+PODFILE CHECKSUM: 9435cda331267b8dc7b1ed7a2f7efe1420d81b7a
+
+COCOAPODS: 1.5.0
