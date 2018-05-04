@@ -65,8 +65,7 @@ class RootViewController: UIViewController {
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .overCurrentContext
         vc.delegate = self
-        vc.sender = currentUser
-        vc.recipient = contact
+        vc.viewModel = MessageComposerViewModel(sender: currentUser, recipient: contact)
         present(vc, animated: true, completion: nil)
     }
 }
